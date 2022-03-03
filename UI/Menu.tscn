@@ -1,16 +1,58 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://UI/Menu.gd" type="Script" id=1]
+[ext_resource path="res://Pieces/Jellee-Bold.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://Pieces/BG.jpg" type="Texture" id=3]
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform float scroll_speed = 0.08;
+//uniform vec2 texture_scroll = vec2(1.0, 0.0);
+
+void fragment()
+{
+    vec2 uv = UV;
+    uv.x = UV.x * 1.0 + pow(abs(sin(3.14 * UV.x/2.0)),2.0);
+    
+    //COLOR = texture(TEXTURE, uv + texture_scroll);
+    COLOR = texture(TEXTURE, uv + (scroll_speed * TIME));
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/scroll_speed = 0.5
+
+[sub_resource type="DynamicFont" id=1]
+size = 35
+outline_size = 5
+outline_color = Color( 0.945098, 0.745098, 0.870588, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 15
+outline_size = 5
+outline_color = Color( 0.945098, 0.745098, 0.870588, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 15
+outline_size = 5
+outline_color = Color( 0.945098, 0.745098, 0.870588, 1 )
+font_data = ExtResource( 2 )
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -20.0
+margin_bottom = -20.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Background" type="ColorRect" parent="."]
+visible = false
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 566.0
@@ -20,28 +62,54 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource( 5 )
+margin_left = -89.0
+margin_top = 11.0
+margin_right = 670.0
+margin_bottom = 1073.0
+texture = ExtResource( 3 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Label" type="Label" parent="."]
-margin_right = 576.0
-margin_bottom = 512.0
-text = "Welcome to Match-3"
+margin_left = 34.0
+margin_top = -73.0
+margin_right = 610.0
+margin_bottom = 439.0
+custom_fonts/font = SubResource( 1 )
+text = "Welcome to Sweet Tooth!"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Play" type="Button" parent="."]
-margin_left = 238.0
-margin_top = 512.0
-margin_right = 338.0
-margin_bottom = 552.0
+margin_left = 222.0
+margin_top = 329.0
+margin_right = 322.0
+margin_bottom = 369.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = SubResource( 2 )
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Quit" type="Button" parent="."]
-margin_left = 238.0
-margin_top = 562.0
-margin_right = 338.0
-margin_bottom = 602.0
+margin_left = 222.0
+margin_top = 429.0
+margin_right = 322.0
+margin_bottom = 469.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = SubResource( 3 )
 text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="Quit" to="." method="_on_Quit_pressed"]
