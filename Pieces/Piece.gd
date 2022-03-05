@@ -11,7 +11,8 @@ var highlight = Color(1,0.8,0,1)
 var dying = false
 
 func _ready():
-	default_modulate = modulate
+	$Select.texture = $Sprite.texture
+	$Select.scale = $Sprite.scale
 
 func _physics_process(_delta):
 	if dying:
@@ -22,6 +23,12 @@ func _physics_process(_delta):
 	else:
 		if modulate != default_modulate:
 			modulate = default_modulate
+	if selected:
+		$Select.show()
+		$Selected.emitting = true
+	else:
+		$Select.hide()
+		$Selected.emitting = false
 		
 
 func move_piece(change):
