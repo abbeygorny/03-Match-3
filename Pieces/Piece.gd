@@ -21,9 +21,10 @@ export var rot_time = 1.5
 func _ready():
 	$Select.texture = $Sprite.texture
 	$Select.scale = $Sprite.scale
-
+	
 
 var Heart = preload("res://Heart/Heart.tscn")
+
 func _physics_process(_delta):
 	if dying:
 		queue_free()
