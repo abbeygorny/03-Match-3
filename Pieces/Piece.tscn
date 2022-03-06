@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Pieces/Piece.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -36,6 +36,33 @@ hue_variation_random = 1.0
 [sub_resource type="CanvasItemMaterial" id=6]
 blend_mode = 1
 
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0, 0.993711, 1 )
+colors = PoolColorArray( 0.345436, 0.902363, 0.784821, 1, 0.929707, 0.6537, 0.860738, 1, 1, 1, 1, 0.815686 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
+
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0.010989, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.510989, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 2
+emission_box_extents = Vector3( 50, 50, 1 )
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = -500.0
+radial_accel_random = 1.0
+scale_curve = SubResource( 10 )
+color_ramp = SubResource( 8 )
+
 [node name="Piece" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -52,3 +79,19 @@ texture = ExtResource( 3 )
 visible = false
 modulate = Color( 0.705882, 0.941176, 0.901961, 1 )
 material = SubResource( 6 )
+
+[node name="Falling" type="Particles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 11 )
+texture = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
