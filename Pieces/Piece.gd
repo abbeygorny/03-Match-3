@@ -9,6 +9,9 @@ var default_modulate = Color(1,1,1,1)
 var highlight = Color(1,0.8,0,1)
 var Effects = null
 var dying = false
+var sound_1 = null
+var sound_2 = null
+var sound_3 = null
 
 var wiggle = 0.0
 var wiggle_amount = 3.0
@@ -45,7 +48,11 @@ func _physics_process(_delta):
 func move_piece(change):
 	target_position = position + change
 	position = target_position
-
+	if sound_1 == null:
+			sound_1 = get_node_or_null("/root/Game/1")
+	if sound_1 != null:
+		sound_1.play()
+	
 func die():
 	if Effects == null:
 		Effects = get_node_or_null("/root/Game/Effects")

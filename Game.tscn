@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Grid/grid.gd" type="Script" id=1]
 [ext_resource path="res://Pieces/Piece Background.tscn" type="PackedScene" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://icon.png" type="Texture" id=4]
 [ext_resource path="res://Pieces/Jellee-Bold.otf" type="DynamicFontData" id=5]
 [ext_resource path="res://Camera.gd" type="Script" id=6]
+[ext_resource path="res://Pieces/Untitled-3_4_22_-4.45-PM.ogg" type="AudioStream" id=7]
+[ext_resource path="res://UI/Music.gd" type="Script" id=8]
+[ext_resource path="res://Pieces/Accept.wav" type="AudioStream" id=9]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -122,6 +125,19 @@ anchor_mode = 0
 current = true
 script = ExtResource( 6 )
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+autoplay = true
+script = ExtResource( 8 )
+
+[node name="1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+autoplay = true
+
+[node name="2" type="AudioStreamPlayer" parent="."]
+
+[node name="3" type="AudioStreamPlayer" parent="."]
+
 [node name="HUD" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
@@ -155,3 +171,6 @@ __meta__ = {
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[connection signal="finished" from="Music" to="grid" method="_on_Music_finished"]
+[connection signal="finished" from="Music" to="Music" method="_on_Music_finished"]
