@@ -62,6 +62,11 @@ func die():
 		$Timer.wait_time = 0.5 + (randf() / 10.0)
 		$Timer.start()
 		$Falling.emitting = true
+	if sound_2 == null:
+			sound_2 = get_node_or_null("/root/Game/2")
+	if sound_2 != null:
+		sound_2.play()
+	
 
 
 func _on_Timer_timeout():
@@ -72,3 +77,8 @@ func _on_Timer_timeout():
 		heart.position = position
 		Effects.add_child(heart)
 	dying = true;
+	if sound_3 == null:
+			sound_3 = get_node_or_null("/root/Game/3")
+	if sound_3 != null:
+		sound_3.play()
+	
